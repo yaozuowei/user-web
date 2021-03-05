@@ -1,0 +1,101 @@
+server:
+  port: 8081
+  servlet:
+    session:
+      timeout: 3600
+
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/user-web?useUnicode=true&characterEncoding=utf-8&autoReconnect=true&useSSL=false&serverTimezone=UTC
+    username: root
+    password: 123456
+    hikari:
+      connection-test-query: select 1
+  resources:
+    chain:
+      strategy:
+        content:
+          enabled: true
+          paths: /**
+    static-locations: classpath:/static/,classpath:/templates/,classpath:/resources/
+
+  redis:
+    # Redis数据库索引（默认为0）
+    database: 1
+    # Redis服务器地址39.106.182.149 127.0.0.1
+    host: 127.0.0.1
+    # Redis服务器连接端口
+    port: 6379
+    # Redis服务器连接密码（默认为空
+    password:
+    jedis:
+      pool:
+        # 连接池最大连接数（使用负值表示没有限制）
+        max-active: 8
+        # 连接池最大阻塞等待时间（使用负值表示没有限制）
+        max-wait: -1
+        # 连接池中的最大空闲连接
+        max-idle: 8
+        # 连接池中的最小空闲连接
+        min-idle: 0
+    ## 连接超时时间（毫秒）
+    timeout: 2000
+  #使用使用Redis缓存session数据
+  session:
+    store-type: redis
+
+  thymeleaf:
+    cache:  false
+    mode: HTML
+    encoding: utf-8
+
+  servlet:
+    multipart:
+      max-file-size: 50MB
+      max-request-size: 50MB
+
+typeutil:
+  #security不拦截
+  antMatchers:  /user/profile/**,/quit/**,/toLogin/**,/layui/**,/jquery/**,/images/**,/css/**,/ajax/**,/file/**,/fonts/**,/i18n/**,/img/**,/js/**,/ruoyi/**
+  #rememberMe记住我设置token时间
+  tokenValiditySeconds: 3600
+  #同一用户在系统中只能登录几次
+  maximumSession: 1
+
+
+mybatis:
+  mapper-locations: classpath*:mapper/*.xml
+  type-aliases-package: com.yzw.web.core.entity
+
+  configuration:
+    # 这个配置会将执行的sql打印出来，在开发或测试的时候可以用
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+#ftp服务器的地址
+file:
+  ftp:
+    host: 39.106.182.149
+    #ftp服务器的端口号（连接端口号）
+    port: 21
+    #ftp的用户名
+    username: ftp_123
+    #ftp的密码
+    password: 123456
+    #ftp上传的根目录
+    basePath: /home/ftp_123/image
+    #回显地址
+    httpPath: http://39.106.182.149/images/image/
+
+
+sms: #MeAdmin
+  accessId: ENC(/Qwe1EBzhlI31tW81PN6uEGzD+xRC/SxQnVdOIKIcZBd+On9dLjucQ==)
+  accessKey:  ENC(DWBYp+drromV2FXA+AXuIvwWtmwOX6sExuueO2eojMxBQWSpihHQEQ==)
+  signName: 兴盛源商城
+  templateCode: SMS_208875167
+  product: Dysmsapi
+  domain: dysmsapi.aliyuncs.com
+
+jasypt:
+  encryptor:
+    password: yaozuowei  #你的秘钥

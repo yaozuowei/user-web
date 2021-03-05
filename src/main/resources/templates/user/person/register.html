@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:include="include :: header('注册用户')"/>
+</head>
+<body class="white-bg">
+<div class="wrapper wrapper-content animated fadeInRight ibox-content">
+    <form class="form-horizontal" id="form-user-register">
+        <div class="form-group">
+            <label class="col-sm-2 control-label is-required">登录账号：</label>
+            <div class="col-sm-4">
+                <input class="form-control" type="text" name="userNo" id="userNo" placeholder="请输入登录账号"/>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label is-required">用户名称：</label>
+            <div class="col-sm-4">
+                <input class="form-control" type="text" name="userName" id="userName" placeholder="请输入用户名称"/>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label is-required">手机号码：</label>
+            <div class="col-sm-4">
+                <input type="text" class="form-control" name="directTel" maxlength="11" id="directTel"
+                       placeholder="请输入手机号码">
+            </div>
+            <div>
+                <button type="button" disabled="disabled" id="buCode" class="layui-btn layui-btn-radius layui-btn-sm layui-btn-disabled" style="background: #1e9fff" onclick="sendCode();">获取验证码</button>
+            </div>
+
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label is-required">验证码：</label>
+            <div class="col-sm-4">
+                <input type="text" class="form-control" readonly name="verification" maxlength="6" id="verification"
+                       placeholder="请输入验证码">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label is-required">邮箱：</label>
+            <div class="col-sm-4">
+                <input type="text" class="form-control" name="email" id="email"
+                       placeholder="请输入邮箱">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label is-required">新密码：</label>
+            <div class="col-sm-4">
+                <input type="password" class="form-control" name="newPassword"
+                       id="newPassword" placeholder="请输入新密码">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label is-required">确认密码：</label>
+            <div class="col-sm-4">
+                <input type="password" class="form-control" name="userPassword" id="userPassword"
+                       placeholder="请确认密码">
+            </div>
+        </div>
+        <div class="layui-layer-btn layui-layer-btn-">
+            <a class="layui-layer-btn0" href="javascript:saveRegister();">确定</a>
+        </div>
+    </form>
+</div>
+<th:block th:include="include :: footer"/>
+
+<script>
+    $("#form-user-register").validate({
+        onkeyup: false,
+        rules: {
+            userNo: {
+                required: true,
+                minlength: 6,
+            },
+            userName: {
+                required: true,
+            },
+            email: {
+                required: true,
+                email: true,
+                remote: {
+                    url: ctx + "user/profile/checkEmailUnique",
+                    type: "post",
+                    dataType: "json",
+                    data: {
+                        "email": function () {
+                            return $.common.trim($("#email").val());
+                        }
+                    },
+                    dataFilter: function (data, type) {
+                        return $.validate.unique(data);
+                    }
+                }
+            },
+            directTel: {
+                required: true,
+                isPhone: true,
+                remote: {
+                    url: ctx + "user/profile/checkPhoneUnique",
+                    type: "post",
+                    dataType: "json",
+                    data: {
+                        "directTel": function () {
+                            return $.common.trim($("#directTel").val());
+                        }
+                    },
+                    dataFilter: function (data) {
+                        if (data=="0"){
+                            $("#buCode").removeClass("layui-btn-disabled");
+                            $("#verification").removeAttr("readonly");
+                            $('#buCode').removeAttr("disabled");
+
+                        }else {
+                            $("#buCode").addClass("layui-btn-disabled");
+                            $('#buCode').attr("disabled","disabled");
+                            $("#verification").attr("readonly","readonly");
+                        }
+                        return $.validate.unique(data);
+                    }
+                }
+            },
+            verification:{
+                required: true,
+                remote: {
+                    url: ctx + "user/profile/verifyCode",
+                    type: "post",
+                    dataType: "json",
+                    data: {
+                        "directTel": function () {
+                            return $.common.trim($("#directTel").val());
+                        },
+                        "verification":function () {
+                            return $.common.trim($("#verification").val());
+                        }
+                    },
+                    dataFilter: function (data) {
+                        return $.validate.unique(data);
+                    }
+                }
+
+            },
+            newPassword: {
+                required: true,
+                minlength: 6,
+                maxlength: 20
+            },
+            userPassword: {
+                required: true,
+                equalTo: "#newPassword"
+            }
+        },
+        messages: {
+            "userNo": {
+                required: "请输入登录名称",
+                minlength: "登录名称不能少于6个字符",
+            },
+            "userName": {
+                required: "请输入用户名称",
+            },
+            "email": {
+                required: "请输入邮箱",
+                remote: "Email已经存在"
+            },
+            "directTel": {
+                required: "请输入手机号码",
+                remote: "手机号码已经存在"
+            },
+            "verification":{
+                required: "请输入验证码",
+                remote:"验证码错误"
+            },
+            "newPassword": {
+                required: "请输入新密码",
+                minlength: "密码不能小于6个字符",
+                maxlength: "密码不能大于20个字符"
+            },
+            "userPassword": {
+                required: "请再次输入新密码",
+                equalTo: "两次密码输入不一致"
+            }
+        },
+        focusCleanup: true
+    });
+
+
+    function saveRegister() {
+        if ($.validate.form("form-user-register")) {
+            $.post("/user/profile/save", $("#form-user-register").serialize(), function (res) {
+                if (res.code == 200) {
+                    layer.msg(res.msg, {
+                        icon: 1,
+                        time: 1000 //2秒关闭（如果不配置，默认是3秒）
+                    }, function(){
+                        let index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
+                        parent.layer.close(index); //再执行关闭
+                    });
+                }else {
+                    layer.msg(res.msg, {
+                        icon: 2,
+                        time: 1000 //2秒关闭（如果不配置，默认是3秒）
+                    }, function(){
+                    });
+                }
+
+            });
+        }
+    }
+
+    function sendCode() {
+        var formdata = new FormData();
+        formdata.append("phone",  $("#directTel").val());
+        $.ajax({
+            url: "/user/profile/sendSms",
+            data: formdata,
+            type: "post",
+            processData: false,
+            contentType: false,
+            success: function (result) {
+                if (result.code == 200) {
+                    $.modal.alertSuccess(result.msg)
+                }else {
+                    $.modal.alertError(result.msg);
+                }
+                $.modal.closeLoading();
+            }
+        })
+    }
+
+
+</script>
+
+</body>
+</html>
