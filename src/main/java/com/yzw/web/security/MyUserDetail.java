@@ -18,6 +18,7 @@ public class MyUserDetail implements UserDetails {
     private String username;
     private String password;
     private Set<? extends GrantedAuthority> authorities;
+    private String status;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -64,5 +65,13 @@ public class MyUserDetail implements UserDetails {
     @Override
     public boolean isEnabled() {
         return true;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 }

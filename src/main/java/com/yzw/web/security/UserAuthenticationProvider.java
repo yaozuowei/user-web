@@ -1,9 +1,8 @@
 package com.yzw.web.security;
 
+import com.yzw.web.common.enums.EnumTrueFalse;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.AuthenticationProvider;
-import org.springframework.security.authentication.BadCredentialsException;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.authentication.*;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -15,7 +14,7 @@ import org.springframework.web.context.request.ServletWebRequest;
 import javax.servlet.http.HttpServletRequest;
 
 /**
- * @Auther: YaoZuoWei
+ * @author: YaoZuoWei
  * @Date: 2020/04/24/14:36
  * @Description:自定义登录验证
  */
@@ -44,6 +43,9 @@ public class UserAuthenticationProvider implements AuthenticationProvider {
         // 我们还要判断密码是否正确，这里我们的密码使用BCryptPasswordEncoder进行加密的
         if (!new BCryptPasswordEncoder().matches(password, myUserDetail.getPassword())) {
             throw new BadCredentialsException("密码不正确");
+        }
+        if (myUserDetail.getStatus().equals(String.valueOf(EnumTrueFalse.TRUE))){
+            throw new LockedException("账号被锁定,请联系管理员解封");
         }
         sessionStrategy.setAttribute(new ServletWebRequest(request), "principal", userName);
         // 进行登录

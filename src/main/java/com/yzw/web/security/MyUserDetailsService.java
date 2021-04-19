@@ -51,6 +51,7 @@ public class MyUserDetailsService implements UserDetailsService {
         MyUserDetail myUserDetail = new MyUserDetail();
         myUserDetail.setUsername(username);
         myUserDetail.setPassword(user.getUserPassword());
+        myUserDetail.setStatus(user.getUserSystem());
 
         List<Role> roleList = roleService.findRoleByUser(user.getUserGuid());
 

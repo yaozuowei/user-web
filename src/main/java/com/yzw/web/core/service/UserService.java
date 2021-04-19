@@ -181,5 +181,19 @@ public class UserService extends BaseService {
         }
     }
 
+    /**
+     * 停用或启用用户
+     * @param loginName
+     * @param user
+     */
+    public void changeStatus(String loginName, User user) throws PlatException{
+        User userRX=getUserByuserLabel(user.getUserNo());
+        if (userRX==null){
+            throw new PlatException("用户不存在");
+        }
+        user.initUpdate(loginName);
+        user.setUserGuid(userRX.getUserGuid());
+        userMapper.updateByPrimaryKeySelective(user);
 
+    }
 }

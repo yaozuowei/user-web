@@ -17,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -71,6 +72,34 @@ public class UserController extends BaseController {
         return getDataTable(list);
     }
 
+    /**
+     * 修改或新增用户列表
+     */
+    @GetMapping("/edit/{userNo}")
+    public String edit(@PathVariable("userNo") String userNo, Model model)
+    {
+        User user=userService.getUserByuserLabel(userNo);
+        model.addAttribute("user",user);
+        return "user/editAndadd";
+    }
+
+    /**
+     *停用或启用用户
+     * @param user
+     * @return
+     */
+    @PostMapping(value = "/changeStatus")
+    @ResponseBody
+    public ResultUtil changeStatus(User user){
+        try {
+            userService.changeStatus(getLoginName(),user);
+            return ResultUtil.success("修改成功");
+        } catch (Exception e) {
+            e.printStackTrace();
+            LOG.error(e.getMessage());
+            return ResultUtil.error(e.getMessage());
+        }
+    }
 
     /**
      * 个人信息
