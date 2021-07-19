@@ -96,7 +96,7 @@ public class UserService extends BaseService {
      * 修改用户
      */
     public int updateUser(User user,String loginName) {
-        User NewUser=getUserByuserLabel(loginName);
+        User NewUser=getUserByuserLabel(user.getUserNo());
         user.setUserGuid(NewUser.getUserGuid());
         user.initUpdate(loginName);
         if (!StringUtils.isEmpty(user.getUserPassword())){
@@ -118,6 +118,9 @@ public class UserService extends BaseService {
         }
 
         initModel(loginName,user);
+        if (StringUtil.isEmpty(user.getUserPassword())){
+            user.setUserPassword("123456");
+        }
         user.setUserPassword(SecurityEncodeUtil.encode(user.getUserPassword()));
         user.setUserGuid(BizIdUtil.INSTANCE.nextId());
         userMapper.insertSelective(user);

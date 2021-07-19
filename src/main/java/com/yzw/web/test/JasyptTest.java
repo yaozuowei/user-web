@@ -1,6 +1,7 @@
 package com.yzw.web.test;
 
 
+import com.yzw.web.common.util.SecurityEncodeUtil;
 import org.jasypt.encryption.pbe.StandardPBEStringEncryptor;
 import org.jasypt.encryption.pbe.config.EnvironmentPBEConfig;
 import org.junit.Test;
@@ -43,5 +44,11 @@ public class JasyptTest {
         String encryptedText = "/Qwe1EBzhlI31tW81PN6uEGzD+xRC/SxQnVdOIKIcZBd+On9dLjucQ==";
         String plainText = standardPBEStringEncryptor.decrypt(encryptedText);
         System.out.println(plainText);
+    }
+
+    @Test
+    public void password(){
+        String nePassword= SecurityEncodeUtil.encode("123456");
+        System.out.println(nePassword);
     }
 }

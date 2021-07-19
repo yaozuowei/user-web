@@ -84,10 +84,10 @@
     });
 
     function queryUserList() {
-        var options = {
+            var options = {
             url: prefix + "/findListUser",
-            createUrl: prefix + "/add",
-            updateUrl: prefix + "/edit/{id}",
+            createUrl: prefix + "/editAndAdd/"+null,
+            updateUrl: prefix + "/editAndAdd/{id}",
             removeUrl: prefix + "/remove",
             exportUrl: prefix + "/export",
             importUrl: prefix + "/importData",
@@ -95,7 +95,7 @@
             sortName: "createDate",
             sortOrder: "desc",
             modalName: "用户",
-            uniqueId: 'userGuid',
+            uniqueId: 'userNo',
             clickToSelect:true,
             columns: [{
                 checkbox: true

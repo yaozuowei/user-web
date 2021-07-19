@@ -5,6 +5,8 @@ import com.yzw.web.common.constants.UserConstants;
 import com.yzw.web.common.page.TableDataInfo;
 import com.yzw.web.common.util.ResultUtil;
 import com.yzw.web.common.util.SecurityEncodeUtil;
+import com.yzw.web.common.util.StringUtil;
+import com.yzw.web.common.util.StringUtils;
 import com.yzw.web.core.entity.User;
 import com.yzw.web.core.service.UserService;
 import com.yzw.web.util.ftp.FtpProperties;
@@ -75,13 +77,40 @@ public class UserController extends BaseController {
     /**
      * 修改或新增用户列表
      */
-    @GetMapping("/edit/{userNo}")
-    public String edit(@PathVariable("userNo") String userNo, Model model)
-    {
-        User user=userService.getUserByuserLabel(userNo);
+    @GetMapping("/editAndAdd/{userNo}")
+    public String editAndAdd(@PathVariable("userNo") String userNo, Model model) {
+        User user=new User();
+        if (!"null".equals(userNo)){
+            user=userService.getUserByuserLabel(userNo);
+        }
         model.addAttribute("user",user);
         return "user/editAndadd";
     }
+
+    /**
+     * 修改或新增用户
+     * @param user
+     * @return
+     */
+    @PreAuthorize("hasPermission('/ModeiAndAdd','system:user:edit') or hasPermission('/ModeiAndAdd','system:user:add')")
+    @PostMapping("/ModeiAndAdd")
+    @ResponseBody
+    public ResultUtil ModeiAndAdd(User user){
+        try {
+                if (StringUtil.isEmpty(user.getUserGuid())){
+                userService.saveUser(user,getLoginName());
+                return ResultUtil.success("新增成功");
+            }else {
+                userService.updateUser(user,getLoginName());
+                return ResultUtil.success("修改成功");
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+            LOG.error(e.getMessage());
+            return ResultUtil.error(e.getMessage());
+        }
+    }
+
 
     /**
      *停用或启用用户
@@ -89,6 +118,7 @@ public class UserController extends BaseController {
      * @return
      */
     @PostMapping(value = "/changeStatus")
+    @PreAuthorize("hasPermission('/changeStatus','system:user:edit')")
     @ResponseBody
     public ResultUtil changeStatus(User user){
         try {
@@ -129,6 +159,7 @@ public class UserController extends BaseController {
      * @return
      */
     @PostMapping("/profile/avatar/updateAvatar")
+    @PreAuthorize("hasPermission('/updateAvatar','system:user:edit')")
     @ResponseBody
     public ResultUtil updateAvatar(@RequestParam("avatarfile") MultipartFile file) {
         try {
@@ -185,6 +216,7 @@ public class UserController extends BaseController {
      * @return
      */
     @PostMapping("/profile/update")
+    @PreAuthorize("hasPermission('/profile/update','system:user:edit')")
     @ResponseBody
     public ResultUtil update(User user) {
         try {

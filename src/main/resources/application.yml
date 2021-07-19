@@ -7,9 +7,9 @@ server:
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://127.0.0.1:3306/user-web?useUnicode=true&characterEncoding=utf-8&autoReconnect=true&useSSL=false&serverTimezone=UTC
+    url: jdbc:mysql://39.106.182.149:3306/user-web?useUnicode=true&characterEncoding=utf-8&autoReconnect=true&useSSL=false&serverTimezone=UTC
     username: root
-    password: 123456
+    password: Yaozuowei1025@@@
     hikari:
       connection-test-query: select 1
   resources:
@@ -24,7 +24,7 @@ spring:
     # Redis数据库索引（默认为0）
     database: 1
     # Redis服务器地址39.106.182.149 127.0.0.1
-    host: 127.0.0.1
+    host: 39.106.182.149
     # Redis服务器连接端口
     port: 6379
     # Redis服务器连接密码（默认为空
