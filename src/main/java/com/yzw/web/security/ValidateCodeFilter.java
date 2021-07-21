@@ -66,24 +66,24 @@ public class ValidateCodeFilter extends OncePerRequestFilter {
         String codeInRequest = ServletRequestUtils.getStringParameter(request.getRequest(), "imageCode");
         // 2. 校验空值情况
         if (StringUtils.isEmpty(codeInRequest)) {
-            throw new ValidateCodeException("验证码不能为空");
+            throw new ValidateCodeException("验证码不能为空!");
         }
 
         // 3. 获取服务器session池中的验证码
         ImageCode codeInSession = (ImageCode) sessionStrategy.getAttribute(request, MyConstants.SESSION_KEY);
         if (Objects.isNull(codeInSession)) {
-            throw new ValidateCodeException("验证码不存在");
+            throw new ValidateCodeException("验证码不存在!");
         }
 
         // 4. 校验服务器session池中的验证码是否过期
         if (codeInSession.isExpried()) {
             sessionStrategy.removeAttribute(request, MyConstants.SESSION_KEY);
-            throw new ValidateCodeException("验证码过期了");
+            throw new ValidateCodeException("验证码已过期!");
         }
 
         // 5. 请求验证码校验
         if (!StringUtils.equals(codeInSession.getCode(), codeInRequest)) {
-            throw new ValidateCodeException("验证码不匹配");
+            throw new ValidateCodeException("验证码错误!");
         }
 
         // 6. 移除已完成校验的验证码

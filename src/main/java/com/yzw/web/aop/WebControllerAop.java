@@ -123,6 +123,6 @@ public class WebControllerAop {
 
         //AOP代理类的名字
         String className = signature.getDeclaringTypeName();
-        log.info("LOG--end: "+className+"."+methodName+"请求耗时："+(currentTime - startTime)+"ms 操作人---"+ LoginUtil.getLoginName());
+        log.info("LOG--end: "+"结束时间："+ new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())+" "+className+"."+methodName+"请求耗时："+(currentTime - startTime)+"ms 操作人---"+ LoginUtil.getLoginName());
     }
 }

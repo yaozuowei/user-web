@@ -47,7 +47,7 @@ public class ImageCodeUtil {
         String sRand = "";
         int length = ServletRequestUtils.getIntParameter(request.getRequest(), "length", MyConstants.RANDOM_SIZE);
         for (int i = 0; i < length; i++) {
-            String rand = String.valueOf(random.nextInt(10));
+            String rand = String.valueOf(MyConstants.SEQ[random.nextInt(MyConstants.SEQ.length)]);
             sRand += rand;
             g.setColor(new Color(20 + random.nextInt(110), 20 + random.nextInt(110), 20 + random.nextInt(110)));
             g.drawString(rand, 13 * i + 6, 16);

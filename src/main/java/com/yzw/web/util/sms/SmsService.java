@@ -56,7 +56,7 @@ public class SmsService {
             sendSmsResponse = sendSms(phone,smsJson);
         } catch (ClientException e) {
             log.error("短信验证码发送失败");
-            e.printStackTrace();
+            throw new PlatException(e.getMessage());
         }
         if(sendSmsResponse.getCode() != null && sendSmsResponse.getCode().equals("OK")) {
             //短信发送成功，将短信记录到redis中

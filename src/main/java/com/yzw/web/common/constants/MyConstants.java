@@ -22,4 +22,6 @@ public class MyConstants {
 
     // 验证码过期秒数
     public static final int EXPIRE_SECOND = 60;
+
+    public static char[] SEQ="ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789".toCharArray();
 }

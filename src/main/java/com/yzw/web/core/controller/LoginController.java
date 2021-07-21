@@ -91,7 +91,7 @@ public class LoginController extends BaseController {
      */
     @GetMapping("/session/invalid")
     public String sessionInvalid() {
-        return "/login";
+        return "login";
     }
 
     /**
@@ -99,7 +99,7 @@ public class LoginController extends BaseController {
      */
     @GetMapping("/session/expired")
     public String sessionExpired() {
-        return "/error/ainlogin";
+        return "error/ainlogin";
     }
 
     /**
@@ -110,7 +110,7 @@ public class LoginController extends BaseController {
      */
     @GetMapping("/session/noauth")
     public String sessionNoauth() {
-        return "/error/noauth";
+        return "error/noauth";
     }
 
 
@@ -120,6 +120,6 @@ public class LoginController extends BaseController {
      */
     @GetMapping("/register")
     public String registerUser() {
-        return "/user/person/register";
+        return "user/person/register";
     }
 }
