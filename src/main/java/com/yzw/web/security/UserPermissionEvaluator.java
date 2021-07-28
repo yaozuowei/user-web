@@ -21,7 +21,7 @@ import java.util.Set;
 /**
  * Created with IntelliJ IDEA.
  *
- * @Auther: YaoZuoWei
+ * @author Yao
  * @Date: 2020/04/24/14:36
  * @Description: 自定义权限注解验证
  */
@@ -52,25 +52,26 @@ public class UserPermissionEvaluator implements PermissionEvaluator {
         // 获取用户信息
         String userName;
         if (authentication.getPrincipal() instanceof UserDetails) {
-            UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-            userName = userDetails.getUsername();
+            //UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+            //userName = userDetails.getUsername();
+            userName = ((UserDetails) authentication.getPrincipal()).getUsername();
         } else {
             userName = (String) authentication.getPrincipal();
         }
-        User user = userService.getUserByuserLabel(userName);
+        //User user = userService.getUserByuserLabel(userName);
 
         //管理员直接放行
-        if (UserManager.isAdministrator(user.getUserNo())) {
+        if (UserManager.isAdministrator(userName)) {
             return true;
         }
 
         Set<String> permissions = new HashSet<>();
 
         // 查询用户权限(这里可以将权限放入缓存中提升效率)
-        List<Menu> list = (List<Menu>) cacheManager.get(user.getUserNo() + "_permissions");
+        List<Menu> list = (List<Menu>) cacheManager.get(userName + "_permissions");
         if (list == null || list.size() == 0) {
-            list = rmService.findMenuByUser(user.getUserNo());
-            cacheManager.set(user.getUserNo() + "_permissions", list);
+            list = rmService.findMenuByUser(userName);
+            cacheManager.set(userName + "_permissions", list);
         }
 
         for (Menu menu : list) {

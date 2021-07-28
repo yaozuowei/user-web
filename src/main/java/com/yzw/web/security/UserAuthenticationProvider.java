@@ -47,7 +47,7 @@ public class UserAuthenticationProvider implements AuthenticationProvider {
         if (myUserDetail.getStatus().equals(String.valueOf(EnumTrueFalse.TRUE))){
             throw new LockedException("账号被锁定,请联系管理员解封");
         }
-        sessionStrategy.setAttribute(new ServletWebRequest(request), "principal", userName);
+        //sessionStrategy.setAttribute(new ServletWebRequest(request), "principal", userName);
         // 进行登录
         return new UsernamePasswordAuthenticationToken(userName, password, myUserDetail.getAuthorities());
     }
