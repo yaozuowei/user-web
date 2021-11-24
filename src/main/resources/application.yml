@@ -27,7 +27,7 @@ spring:
     host: 127.0.0.1
     # Redis服务器连接端口
     port: 6379
-    # Redis服务器连接密码（默认为空)
+    # Redis服务器连接密码（默认为空123)
     password:
     jedis:
       pool:
