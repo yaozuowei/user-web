@@ -7,7 +7,7 @@
  -->
 <configuration>
 
-    <!--定义日志文件的存储地址 勿在 LogBack 的配置中使用相对路径11-->
+    <!--定义日志文件的存储地址 勿在 LogBack 的配置中使用相对路径1-->
     <property name="LOG_HOME" value="/yzw/idea/My/user-web/logs"/>
 
     <!-- 配置项， 通过此节点配置日志输出位置（控制台、文件、数据库）、输出格式等-->
