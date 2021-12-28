@@ -15,14 +15,14 @@ import org.springframework.web.context.request.ServletWebRequest;
 import javax.servlet.http.HttpServletRequest;
 
 /**
- * @Auther: YaoZuoWei
+ * @author: YaoZuoWei
  * @Date: 2020/04/24/14:36
  * @Description:自定义登录验证
  */
 @Component
 public class UserAuthenticationProvider implements AuthenticationProvider {
     @Autowired
-    private MyUserDetailsService myUserDetailsService;
+    private MyUserDetailsServiceImpl myUserDetailsServiceImpl;
 
     @Autowired
     private SessionStrategy sessionStrategy;
@@ -37,7 +37,7 @@ public class UserAuthenticationProvider implements AuthenticationProvider {
         // 获取表单中输入的密码
         String password = (String) authentication.getCredentials();
 
-        MyUserDetail myUserDetail = (MyUserDetail) myUserDetailsService.loadUserByUsername(userName);
+        MyUserDetail myUserDetail = (MyUserDetail) myUserDetailsServiceImpl.loadUserByUsername(userName);
         if (myUserDetail == null) {
             throw new UsernameNotFoundException("用户名不存在");
         }

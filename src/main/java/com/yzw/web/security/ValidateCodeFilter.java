@@ -25,7 +25,7 @@ import java.util.Objects;
 /**
  * Created with IntelliJ IDEA.
  *
- * @Auther: YaoZuoWei
+ * @author: YaoZuoWei
  * @Date: 2020/04/27/16:30
  * @Description:
  */

@@ -14,7 +14,7 @@ import java.io.IOException;
 /**
  * Created with IntelliJ IDEA.
  *
- * @Auther: YaoZuoWei
+ * @author: YaoZuoWei
  * @Date: 2020/04/27/13:21
  * @Description:登录失败处理类
  */

@@ -21,7 +21,7 @@ import java.util.Set;
 /**
  * Created with IntelliJ IDEA.
  *
- * @Auther: YaoZuoWei
+ * @author: YaoZuoWei
  * @Date: 2020/04/24/14:36
  * @Description: 自定义权限注解验证
  */

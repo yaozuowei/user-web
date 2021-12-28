@@ -20,12 +20,12 @@ import java.util.Set;
 /**
  * Created with IntelliJ IDEA.
  *
- * @Auther: YaoZuoWei
+ * @author: YaoZuoWei
  * @Date: 2020/04/24/14:06
  * @Description:
  */
 @Component
-public class MyUserDetailsService implements UserDetailsService {
+public class MyUserDetailsServiceImpl implements UserDetailsService {
 
     @Resource(name = "UserService")
     private UserService userService;
