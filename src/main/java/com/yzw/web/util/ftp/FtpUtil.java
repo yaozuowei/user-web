@@ -205,7 +205,7 @@ public class FtpUtil {
             //.把文件转换为二进制字符流的形式进行上传
             ftp.setFileType(FTP.BINARY_FILE_TYPE);
             //被动模式
-            ftp.enterLocalPassiveMode();
+            //ftp.enterLocalPassiveMode();
             //设置传输方式为流方式
             ftp.setFileTransferMode(FTP.STREAM_TRANSFER_MODE);
 

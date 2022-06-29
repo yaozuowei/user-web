@@ -7,9 +7,9 @@ server:
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://39.106.182.149:3306/user-web?useUnicode=true&characterEncoding=utf-8&autoReconnect=true&useSSL=false&serverTimezone=UTC
+    url: jdbc:mysql://127.0.0.1:3306/user-web?useUnicode=true&characterEncoding=utf-8&autoReconnect=true&useSSL=false&serverTimezone=UTC
     username: root
-    password: Yaozuowei1025@@@
+    password: 123456
     hikari:
       connection-test-query: select 1
   resources:
@@ -23,8 +23,8 @@ spring:
   redis:
     # Redis数据库索引（默认为0）
     database: 2
-    # Redis服务器地址39.106.182.149 127.0.0.1
-    host: 39.106.182.149
+    # Redis服务器地址81.68.253.151 127.0.0.1
+    host: 81.68.253.151
     # Redis服务器连接端口
     port: 6379
     # Redis服务器连接密码（默认为空
@@ -77,7 +77,7 @@ mybatis:
 #ftp服务器的地址
 file:
   ftp:
-    host: 39.106.182.149
+    host: 81.68.253.151
     #ftp服务器的端口号（连接端口号）
     port: 21
     #ftp的用户名
@@ -85,9 +85,9 @@ file:
     #ftp的密码
     password: 123456
     #ftp上传的根目录
-    basePath: /home/ftp_123/image
+    basePath: /usr/local/yzw/ftp/image
     #回显地址
-    httpPath: http://39.106.182.149/images/image/
+    httpPath: http://81.68.253.151/profile/
 
 
 sms: #MeAdmin
