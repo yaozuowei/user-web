@@ -24,10 +24,10 @@ public class JasyptTest {
         // 加密的算法，这个算法是默认的
         config.setAlgorithm("PBEWithMD5AndDES");
         // 加密的密钥，随便自己填写，很重要千万不要告诉别人
-        config.setPassword("yaozuowei");
+        config.setPassword("jasypt-hnxh-harvey");
         standardPBEStringEncryptor.setConfig(config);
         //自己的密码
-        String plainText = "WH4AdFzpEEEqKQg49v8XTeUihv4F0U";
+        String plainText = "Bee2022xmf22";
         String encryptedText = standardPBEStringEncryptor.encrypt(plainText);
         System.out.println(encryptedText);
     }
